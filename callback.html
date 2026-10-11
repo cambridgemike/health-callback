@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>health-lab OAuth callback</title>
+<style>
+  :root { --bg: #fff; --fg: #111; --muted: #666; --box: #f3f3f3; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --fg: #eee; --muted: #999; --box: #222; } }
+  body { font: 16px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--fg); margin: 0; padding: 32px 16px; }
+  main { max-width: 640px; margin: 0 auto; }
+  code, textarea { font: 14px/1.4 ui-monospace, monospace; }
+  textarea { width: 100%; box-sizing: border-box; height: 6em; background: var(--box); color: var(--fg); border: 1px solid var(--muted); border-radius: 6px; padding: 8px; }
+  button { font: inherit; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--muted); background: var(--box); color: var(--fg); cursor: pointer; }
+  p.muted { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Authorized</h1>
+  <p>Paste this URL into the terminal running <code>health auth</code>. The code expires in about 30 seconds.</p>
+  <textarea id="url" readonly></textarea>
+  <p><button id="copy">Copy URL</button> <span id="status" class="muted"></span></p>
+  <p class="muted">This page keeps nothing. It only shows the address your browser landed on.</p>
+</main>
+<script>
+  const ta = document.getElementById('url');
+  ta.value = location.href;
+  const status = document.getElementById('status');
+  async function copy() {
+    try { await navigator.clipboard.writeText(location.href); status.textContent = 'Copied.'; }
+    catch (e) { ta.select(); status.textContent = 'Select and copy manually.'; }
+  }
+  document.getElementById('copy').addEventListener('click', copy);
+  copy();
+</script>
+</body>
+</html>
